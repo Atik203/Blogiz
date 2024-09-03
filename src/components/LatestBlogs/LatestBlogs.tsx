@@ -1,7 +1,7 @@
 import { TBlog } from "@/types";
 import LatestBlogCard from "../ui/LatestBlogCard";
 
-const LatestBlogs = ({ blogs }) => {
+const LatestBlogs = ({ blogs }: { blogs: TBlog[] }) => {
   return (
     <div>
       <h1 className="text-center text-4xl my-5">
