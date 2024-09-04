@@ -1,4 +1,10 @@
+import BlogDetails from "@/components/ui/BlogDetails";
 import { TBlog } from "@/types";
+type BlogId = {
+  params: {
+    blogId: string;
+  };
+};
 
 export const generateStaticParams = async () => {
   const res = await fetch("http://localhost:5000/blogs");
@@ -8,21 +14,17 @@ export const generateStaticParams = async () => {
   }));
 };
 
-const BlogDetails = async ({ params }: { params: { blogId: string } }) => {
+const BlogDetailsPage = async ({ params }: BlogId) => {
   const id = params?.blogId;
   const res = await fetch(`http://localhost:5000/blogs/${id}`, {
     cache: "no-store",
   });
-
   const blog: TBlog = await res.json();
   return (
     <div className="p-16">
-      {/* ignore ts error */}
-
-      {/* @ts-ignore */}
       <BlogDetails blog={blog} />
     </div>
   );
 };
 
-export default BlogDetails;
+export default BlogDetailsPage;
