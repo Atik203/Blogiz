@@ -1,8 +1,12 @@
+import BlogCard from "@/components/ui/BlogCard";
 import { TBlog } from "@/types";
-import Link from "next/link";
-import LatestBlogCard from "../ui/LatestBlogCard";
 
-const LatestBlogs = ({ blogs }: { blogs: TBlog[] }) => {
+const BlogsPage = async () => {
+  const res = await fetch("http://localhost:5000/blogs", {
+    cache: "no-store",
+  });
+  const blogs = (await res.json()) as TBlog[];
+
   return (
     <div>
       <h1 className="text-center text-4xl my-5">
@@ -15,18 +19,12 @@ const LatestBlogs = ({ blogs }: { blogs: TBlog[] }) => {
       </p>
 
       <div className=" grid gap-6 md:grid-cols-2 lg:grid-cols-3  p-16">
-        {blogs.slice(0, 3).map((blog: TBlog) => (
-          <LatestBlogCard key={blog.id} blog={blog} />
+        {blogs.map((blog: TBlog) => (
+          <BlogCard key={blog.id} blog={blog} />
         ))}
-      </div>
-
-      <div className="text-center">
-        <Link href="/blogs" className="btn btn-primary">
-          View All Blogs
-        </Link>
       </div>
     </div>
   );
 };
 
-export default LatestBlogs;
+export default BlogsPage;
